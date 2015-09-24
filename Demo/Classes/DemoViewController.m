@@ -18,11 +18,12 @@
 	// Create some sample data
 	entries = [[NSArray alloc] initWithObjects:@"Row 1", @"Row 2", @"Row 3", @"Row 4", @"Row 5", nil];
 	selectionStates = [[NSMutableDictionary alloc] init];
-	for (NSString *key in entries)
-		[selectionStates setObject:[NSNumber numberWithBool:NO] forKey:key];
+    for (NSString *key in entries) {
+		[selectionStates setObject:[NSNumber numberWithBool:YES] forKey:key];
+    }
 	
 	// Init picker and add it to view
-	pickerView = [[ALPickerView alloc] initWithFrame:CGRectMake(0, 244, 0, 0)];
+	pickerView = [[ALPickerView alloc] initWithFrame:CGRectMake(0, 264, 320, 216)];
 	pickerView.delegate = self;
 	[self.view addSubview:pickerView];	
 }

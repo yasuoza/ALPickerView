@@ -19,11 +19,6 @@
 		FA8EA5EA146EC91100CCACA3 /* ALPickerViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FA8EA5E9146EC91100CCACA3 /* ALPickerViewCell.m */; };
 		FA8EA60A146EDEF300CCACA3 /* check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA8EA5EB146EC92A00CCACA3 /* check@2x.png */; };
 		FA8EA60B146EDEF300CCACA3 /* check_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA8EA5EC146EC92A00CCACA3 /* check_selected@2x.png */; };
-		FA8EA60C146EDEF300CCACA3 /* frame_left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA8EA5ED146EC92A00CCACA3 /* frame_left@2x.png */; };
-		FA8EA60D146EDEF300CCACA3 /* frame_middle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA8EA5EE146EC92A00CCACA3 /* frame_middle@2x.png */; };
-		FA8EA60E146EDEF300CCACA3 /* frame_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA8EA5EF146EC92A00CCACA3 /* frame_right@2x.png */; };
-		FA8EA60F146EDEF300CCACA3 /* wheel_shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA8EA5F0146EC92A00CCACA3 /* wheel_shadow@2x.png */; };
-		FA8EA610146EDEF300CCACA3 /* wheel_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FA8EA5F1146EC92A00CCACA3 /* wheel_bg@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,11 +41,6 @@
 		FA8EA5E9146EC91100CCACA3 /* ALPickerViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ALPickerViewCell.m; path = ../../Classes/ALPickerViewCell.m; sourceTree = "<group>"; };
 		FA8EA5EB146EC92A00CCACA3 /* check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check@2x.png"; path = "../ImageRes/check@2x.png"; sourceTree = "<group>"; };
 		FA8EA5EC146EC92A00CCACA3 /* check_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check_selected@2x.png"; path = "../ImageRes/check_selected@2x.png"; sourceTree = "<group>"; };
-		FA8EA5ED146EC92A00CCACA3 /* frame_left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "frame_left@2x.png"; path = "../ImageRes/frame_left@2x.png"; sourceTree = "<group>"; };
-		FA8EA5EE146EC92A00CCACA3 /* frame_middle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "frame_middle@2x.png"; path = "../ImageRes/frame_middle@2x.png"; sourceTree = "<group>"; };
-		FA8EA5EF146EC92A00CCACA3 /* frame_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "frame_right@2x.png"; path = "../ImageRes/frame_right@2x.png"; sourceTree = "<group>"; };
-		FA8EA5F0146EC92A00CCACA3 /* wheel_shadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wheel_shadow@2x.png"; path = "../ImageRes/wheel_shadow@2x.png"; sourceTree = "<group>"; };
-		FA8EA5F1146EC92A00CCACA3 /* wheel_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wheel_bg@2x.png"; path = "../ImageRes/wheel_bg@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,11 +103,6 @@
 			children = (
 				FA8EA5EB146EC92A00CCACA3 /* check@2x.png */,
 				FA8EA5EC146EC92A00CCACA3 /* check_selected@2x.png */,
-				FA8EA5ED146EC92A00CCACA3 /* frame_left@2x.png */,
-				FA8EA5EE146EC92A00CCACA3 /* frame_middle@2x.png */,
-				FA8EA5EF146EC92A00CCACA3 /* frame_right@2x.png */,
-				FA8EA5F0146EC92A00CCACA3 /* wheel_shadow@2x.png */,
-				FA8EA5F1146EC92A00CCACA3 /* wheel_bg@2x.png */,
 				2899E5210DE3E06400AC0155 /* DemoViewController.xib */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* Demo-Info.plist */,
@@ -202,11 +187,6 @@
 				2899E5220DE3E06400AC0155 /* DemoViewController.xib in Resources */,
 				FA8EA60A146EDEF300CCACA3 /* check@2x.png in Resources */,
 				FA8EA60B146EDEF300CCACA3 /* check_selected@2x.png in Resources */,
-				FA8EA60C146EDEF300CCACA3 /* frame_left@2x.png in Resources */,
-				FA8EA60D146EDEF300CCACA3 /* frame_middle@2x.png in Resources */,
-				FA8EA60E146EDEF300CCACA3 /* frame_right@2x.png in Resources */,
-				FA8EA60F146EDEF300CCACA3 /* wheel_shadow@2x.png in Resources */,
-				FA8EA610146EDEF300CCACA3 /* wheel_bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
