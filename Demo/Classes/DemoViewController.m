@@ -23,7 +23,8 @@
     }
 	
 	// Init picker and add it to view
-	pickerView = [[ALPickerView alloc] initWithFrame:CGRectMake(0, 264, 320, 216)];
+	pickerView = [[ALPickerView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 216,
+                                                                self.view.frame.size.width, 216)];
 	pickerView.delegate = self;
 	[self.view addSubview:pickerView];	
 }
