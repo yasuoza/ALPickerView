@@ -184,6 +184,10 @@
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     }
 
+    if (_cellFont) {
+        cell.textLabel.font = _cellFont;
+    }
+
     return cell;
 }
 
