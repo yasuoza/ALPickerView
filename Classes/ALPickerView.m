@@ -26,21 +26,30 @@
 #import "ALPickerView.h"
 #import "ALPickerViewCell.h"
 
+@interface ALPickerView()
+
+@property (nonatomic) UIView *topOverlayView;
+@property (nonatomic) UIView *topOverlayViewBottomBorder;
+
+@property (nonatomic) UIView *bottomOverlayView;
+@property (nonatomic) UIView *bottomOverlayViewTopBorder;
+
+@end
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @implementation ALPickerView
 
-@synthesize delegate = delegate_;
 @synthesize allOptionTitle;
 
 
 #pragma mark - NSObject stuff
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-- (id)init {
-    return [self initWithFrame:CGRectMake(0, 0, 320, 216)];
-}
+//
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//- (id)init {
+//    return [self initWithFrame:CGRectMake(0, 0, 320, 216)];
+//}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)initWithCoder:(NSCoder *)aDecoder {
@@ -81,31 +90,39 @@
     CGFloat borderHeight = 0.4;
     UIColor *borderColor = [UIColor lightGrayColor];
 
-    UIView *topOverlayView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, overlayHeight)];
-    topOverlayView.backgroundColor = overlayColor;
-    [topOverlayView setUserInteractionEnabled:NO];
-    UIView *border = [[UIView alloc] initWithFrame:CGRectMake(0, overlayHeight - borderHeight, frame.size.width, borderHeight)];
-    border.backgroundColor = borderColor;
-    [topOverlayView addSubview:border];
-    [self addSubview:topOverlayView];
+    _topOverlayView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, overlayHeight)];
+    _topOverlayView.backgroundColor = overlayColor;
+    [_topOverlayView setUserInteractionEnabled:NO];
+    _topOverlayViewBottomBorder = [[UIView alloc] initWithFrame:CGRectMake(0, overlayHeight - borderHeight,
+                                                                           frame.size.width, borderHeight)];
+    _topOverlayViewBottomBorder.backgroundColor = borderColor;
+    [_topOverlayView addSubview:_topOverlayViewBottomBorder];
+    [self addSubview:_topOverlayView];
 
-    UIView *bottomOverlayView = [[UIView alloc] initWithFrame:CGRectMake(0, overlayHeight + kALPickerViewCellHeight,
+    _bottomOverlayView = [[UIView alloc] initWithFrame:CGRectMake(0, overlayHeight + kALPickerViewCellHeight,
                                                                          frame.size.width, overlayHeight)];
-    bottomOverlayView.backgroundColor = overlayColor;
-    [bottomOverlayView setUserInteractionEnabled:NO];
-    border = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, borderHeight)];
-    border.backgroundColor = borderColor;
-    [bottomOverlayView addSubview:border];
-    [self addSubview:bottomOverlayView];
+    _bottomOverlayView.backgroundColor = overlayColor;
+    [_bottomOverlayView setUserInteractionEnabled:NO];
+    _bottomOverlayViewTopBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, borderHeight)];
+    _bottomOverlayViewTopBorder.backgroundColor = borderColor;
+    [_bottomOverlayView addSubview:_bottomOverlayViewTopBorder];
+    [self addSubview:_bottomOverlayView];
 }
 
+- (void)layoutSubviews {
+    [super layoutSubviews];
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-- (void)dealloc {
-    [allOptionTitle release];
+    CGRect frame = self.frame;
+    CGFloat overlayHeight = (frame.size.height - kALPickerViewCellHeight) / 2;
+    CGFloat borderHeight = 0.4;
 
-    [internalTableView_ release];
-    [super dealloc];
+    internalTableView_.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
+
+    _topOverlayView.frame = CGRectMake(0, 0, frame.size.width, overlayHeight);
+    _topOverlayViewBottomBorder.frame = CGRectMake(0, overlayHeight - borderHeight, frame.size.width, borderHeight);
+
+    _bottomOverlayView.frame = CGRectMake(0, overlayHeight + kALPickerViewCellHeight, frame.size.width, overlayHeight);
+    _bottomOverlayViewTopBorder.frame = CGRectMake(0, 0, frame.size.width, borderHeight);
 }
 
 
@@ -123,9 +140,9 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Add 4 additional rows for whitespace on top and bottom
     if (allOptionTitle)
-        return [delegate_ numberOfRowsForPickerView:self] ? [delegate_ numberOfRowsForPickerView:self] + 5 : 0;
+        return [_delegate numberOfRowsForPickerView:self] ? [_delegate numberOfRowsForPickerView:self] + 5 : 0;
     else
-        return [delegate_ numberOfRowsForPickerView:self] ? [delegate_ numberOfRowsForPickerView:self] + 4 : 0;
+        return [_delegate numberOfRowsForPickerView:self] ? [_delegate numberOfRowsForPickerView:self] + 4 : 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -133,17 +150,16 @@
     return kALPickerViewCellHeight;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"ALPVCell";
 
     ALPickerViewCell *cell = [aTableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[ALPickerViewCell alloc] initWithReuseIdentifier:CellIdentifier] autorelease];
+        cell = [[ALPickerViewCell alloc] initWithReuseIdentifier:CellIdentifier];
     }
 
-    if (indexPath.row < 2 || indexPath.row >= ([delegate_ numberOfRowsForPickerView:self] + (allOptionTitle ? 3 : 2))) {
+    if (indexPath.row < 2 || indexPath.row >= ([_delegate numberOfRowsForPickerView:self] + (allOptionTitle ? 3 : 2))) {
         // Whitespace cell
         cell.textLabel.text = nil;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -153,7 +169,7 @@
             cell.textLabel.text = allOptionTitle;
             BOOL allSelected = YES;
             for (int i = 0; i < [self.delegate numberOfRowsForPickerView:self]; i++) {
-                if ([delegate_ pickerView:self selectionStateForRow:i] == NO) {
+                if ([_delegate pickerView:self selectionStateForRow:i] == NO) {
                     allSelected = NO;
                     break;
                 }
@@ -161,9 +177,9 @@
             cell.selectionState = allSelected;
         }
         else {
-            int actualRow = indexPath.row - (allOptionTitle ? 3 : 2);
-            cell.textLabel.text = [delegate_ pickerView:self textForRow:actualRow];
-            cell.selectionState = [delegate_ pickerView:self selectionStateForRow:actualRow];
+            int actualRow = (int)indexPath.row - (allOptionTitle ? 3 : 2);
+            cell.textLabel.text = [_delegate pickerView:self textForRow:actualRow];
+            cell.selectionState = [_delegate pickerView:self selectionStateForRow:actualRow];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     }
@@ -174,41 +190,41 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row > 1 && indexPath.row < ([delegate_ numberOfRowsForPickerView:self] + (allOptionTitle ? 3 : 2))) {
+    if (indexPath.row > 1 && indexPath.row < ([_delegate numberOfRowsForPickerView:self] + (allOptionTitle ? 3 : 2))) {
         // Set selection state
         ALPickerViewCell *cell = (ALPickerViewCell *)[tableView cellForRowAtIndexPath:indexPath];
         cell.selectionState = !cell.selectionState;
 
         // Inform delegate
-        int actualRow = indexPath.row - (allOptionTitle ? 3 : 2);
+        int actualRow = (int)indexPath.row - (allOptionTitle ? 3 : 2);
 
         if (cell.selectionState != NO) {
             if ([self.delegate respondsToSelector:@selector(pickerView:didCheckRow:)])
-                [delegate_ pickerView:self didCheckRow:actualRow];
+                [_delegate pickerView:self didCheckRow:actualRow];
         }
         else {
             if ([self.delegate respondsToSelector:@selector(pickerView:didUncheckRow:)])
-                [delegate_ pickerView:self didUncheckRow:actualRow];
+                [_delegate pickerView:self didUncheckRow:actualRow];
         }
 
         // Iterate visible cells and update them too
         for (ALPickerViewCell *aCell in tableView.visibleCells) {
-            int iterateRow = [tableView indexPathForCell:aCell].row - (allOptionTitle ? 3 : 2);
+            int iterateRow = (int)[tableView indexPathForCell:aCell].row - (allOptionTitle ? 3 : 2);
 
             if (allOptionTitle && iterateRow == -1) {
                 BOOL allSelected = YES;
                 for (int i = 0; i < [self.delegate numberOfRowsForPickerView:self]; i++) {
-                    if ([delegate_ pickerView:self selectionStateForRow:i] == NO) {
+                    if ([_delegate pickerView:self selectionStateForRow:i] == NO) {
                         allSelected = NO;
                         break;
                     }
                 }
                 aCell.selectionState = allSelected;
             }
-            else if (iterateRow >= 0 && iterateRow < [delegate_ numberOfRowsForPickerView:self]) {
+            else if (iterateRow >= 0 && iterateRow < [_delegate numberOfRowsForPickerView:self]) {
                 if (iterateRow == actualRow)
                     continue;
-                aCell.selectionState = [delegate_ pickerView:self selectionStateForRow:iterateRow];
+                aCell.selectionState = [_delegate pickerView:self selectionStateForRow:iterateRow];
             }
         }
 
@@ -235,8 +251,9 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)scrollViewDidEndDragging:(UITableView *)scrollView willDecelerate:(BOOL)decelerate {
-    if(decelerate)
+    if(decelerate) {
         return;
+    }
     [self scrollViewDidEndDecelerating:scrollView];
 }
 

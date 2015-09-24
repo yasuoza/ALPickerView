@@ -32,10 +32,9 @@
 
 
 @interface ALPickerView : UIView <UITableViewDataSource, UITableViewDelegate> {
-@private
-  id<ALPickerViewDelegate> delegate_;
-  
+
   UITableView *internalTableView_;
+    
 }
 
 // Set a delegate conforming to ALPickerViewDelegate protocol
