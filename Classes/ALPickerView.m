@@ -72,8 +72,7 @@
 - (void)constructView {
     CGRect frame = self.frame;
 
-    self.backgroundColor = [UIColor blackColor];
-    self.clipsToBounds = YES;
+    self.backgroundColor = [UIColor clearColor];
     self.allOptionTitle = NSLocalizedString(@"All", @"All option title");
 
     internalTableView_ = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height) style:UITableViewStylePlain];
@@ -113,16 +112,17 @@
     [super layoutSubviews];
 
     CGRect frame = self.frame;
-    CGFloat overlayHeight = (frame.size.height - kALPickerViewCellHeight) / 2;
+    CGFloat overlayHeight = ceil((self.frame.size.height - kALPickerViewCellHeight) / 2);
     CGFloat borderHeight = 0.4;
 
-    internalTableView_.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
+    CGFloat extraCellBorderHeight = 2;
+    internalTableView_.frame = CGRectMake(0, extraCellBorderHeight, frame.size.width, frame.size.height);
 
     _topOverlayView.frame = CGRectMake(0, 0, frame.size.width, overlayHeight);
     _topOverlayViewBottomBorder.frame = CGRectMake(0, overlayHeight - borderHeight, frame.size.width, borderHeight);
 
     _bottomOverlayView.frame = CGRectMake(0, overlayHeight + kALPickerViewCellHeight, frame.size.width, overlayHeight);
-    _bottomOverlayViewTopBorder.frame = CGRectMake(0, 0, frame.size.width, borderHeight);
+    _bottomOverlayViewTopBorder.frame = CGRectMake(0, -borderHeight, frame.size.width, borderHeight);
 }
 
 
@@ -244,7 +244,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)scrollViewDidEndDecelerating:(UITableView *)tableView {
-    int co = ((int)tableView.contentOffset.y % (int)kALPickerViewCellHeight);
+    int co = (int)tableView.contentOffset.y % (int)kALPickerViewCellHeight;
     if (co < kALPickerViewCellHeight / 2) {
         [tableView setContentOffset:CGPointMake(0, tableView.contentOffset.y - co) animated:YES];
     } else {

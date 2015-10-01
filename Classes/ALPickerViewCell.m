@@ -84,7 +84,7 @@ CGFloat const kALPickerViewCellHeight = 44.0;
   [super layoutSubviews];
   
   self.imageView.frame = CGRectMake(15, 12, 18, 18);
-  self.textLabel.frame = CGRectMake(44, 9, self.frame.size.width - 54, 24);
+  self.textLabel.frame = CGRectMake(kALPickerViewCellHeight, 9, self.frame.size.width - 54, 24);
 }
 
 @end
