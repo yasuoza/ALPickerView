@@ -117,6 +117,7 @@
 
     CGFloat extraCellBorderHeight = 2;
     internalTableView_.frame = CGRectMake(0, extraCellBorderHeight, frame.size.width, frame.size.height);
+    internalTableView_.separatorStyle = UITableViewCellSeparatorStyleNone;
 
     _topOverlayView.frame = CGRectMake(0, 0, frame.size.width, overlayHeight);
     _topOverlayViewBottomBorder.frame = CGRectMake(0, overlayHeight - borderHeight, frame.size.width, borderHeight);
